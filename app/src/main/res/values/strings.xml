@@ -2,7 +2,10 @@
     <string name="app_name">Tik Tac Toe Game</string>
     <string name="restart_game">Restart Game</string>
     <string name="winner_is">"Winner is: "</string>
-    <string name="game_over_match_is_drawn">Game over! Match is Drawn!</string>
+    <string name="match_is_drawn">Match is Drawn!</string>
+    <string name="game_over">Game over!</string>
     <string name="x">X</string>
     <string name="o">O</string>
+    <string name="current_turn_is_x">"Current Turn is: X"</string>
+    <string name="current_turn_is_o">"Current Turn is: O"</string>
 </resources>

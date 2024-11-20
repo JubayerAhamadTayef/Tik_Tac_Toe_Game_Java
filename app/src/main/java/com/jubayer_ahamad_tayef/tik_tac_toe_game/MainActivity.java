@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, restartBtn;
+    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, restartBtn, currentTurn;
     String btn1txt, btn2txt, btn3txt, btn4txt, btn5txt, btn6txt, btn7txt, btn8txt, btn9txt;
     TextView result;
     byte count = 0;
@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
+
+        currentTurn();
 
         restartBtn.setOnClickListener(view -> {
             restartGame();
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         result = findViewById(R.id.result);
 
+        currentTurn = findViewById(R.id.currentTurn);
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -58,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
             if (state == 0) {
                 currentBtn.setText(R.string.x);
+                currentBtn.setTextColor(getResources().getColor(R.color.yellow));
                 state = 1;
+                currentTurn();
             } else {
                 currentBtn.setText(R.string.o);
+                currentBtn.setTextColor(getResources().getColor(R.color.blue));
                 state = 0;
+                currentTurn();
             }
 
             if (count > 4) {
@@ -84,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn2);
                     winningColor(btn3);
 
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
+
                 } else if (btn4txt.equals(btn5txt) && btn5txt.equals(btn6txt) && !btn4txt.isEmpty()) {
 
                     result.setText(getString(R.string.winner_is) + btn4txt);
@@ -91,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn4);
                     winningColor(btn5);
                     winningColor(btn6);
+
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
 
                 } else if (btn7txt.equals(btn8txt) && btn8txt.equals(btn9txt) && !btn7txt.isEmpty()) {
 
@@ -100,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn8);
                     winningColor(btn9);
 
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
+
                 } else if (btn1txt.equals(btn4txt) && btn4txt.equals(btn7txt) && !btn1txt.isEmpty()) {
 
                     result.setText(getString(R.string.winner_is) + btn1txt);
@@ -107,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn1);
                     winningColor(btn4);
                     winningColor(btn7);
+
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
 
                 } else if (btn2txt.equals(btn5txt) && btn5txt.equals(btn8txt) && !btn2txt.isEmpty()) {
 
@@ -116,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn5);
                     winningColor(btn8);
 
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
+
                 } else if (btn3txt.equals(btn6txt) && btn6txt.equals(btn9txt) && !btn3txt.isEmpty()) {
 
                     result.setText(getString(R.string.winner_is) + btn3txt);
@@ -123,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn3);
                     winningColor(btn6);
                     winningColor(btn9);
+
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
 
                 } else if (btn1txt.equals(btn5txt) && btn5txt.equals(btn9txt) && !btn1txt.isEmpty()) {
 
@@ -132,6 +164,10 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn5);
                     winningColor(btn9);
 
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
+
                 } else if (btn3txt.equals(btn5txt) && btn5txt.equals(btn7txt) && !btn3txt.isEmpty()) {
 
                     result.setText(getString(R.string.winner_is) + btn3txt);
@@ -140,9 +176,15 @@ public class MainActivity extends AppCompatActivity {
                     winningColor(btn5);
                     winningColor(btn7);
 
+                    currentTurnColor(R.string.game_over, R.color.red);
+
+                    btnClickable(false);
+
                 } else if (!btn1txt.isEmpty() && !btn2txt.isEmpty() && !btn3txt.isEmpty() && !btn4txt.isEmpty() && !btn5txt.isEmpty() && !btn6txt.isEmpty() && !btn7txt.isEmpty() && !btn8txt.isEmpty() && !btn9txt.isEmpty()) {
 
-                    result.setText(R.string.game_over_match_is_drawn);
+                    result.setText(R.string.match_is_drawn);
+
+                    currentTurnColor(R.string.game_over, R.color.red);
 
                 }
 
@@ -178,6 +220,37 @@ public class MainActivity extends AppCompatActivity {
         state = 0;
 
         count = 0;
+
+        btnClickable(true);
+
+        currentTurn();
+    }
+
+    private void currentTurn() {
+        if (state == 0) {
+            currentTurn.setText(getString(R.string.current_turn_is_x));
+            currentTurn.setTextColor(getResources().getColor(R.color.yellow));
+        } else if (state == 1) {
+            currentTurn.setText(getString(R.string.current_turn_is_o));
+            currentTurn.setTextColor(getResources().getColor(R.color.blue));
+        }
+    }
+
+    private void btnClickable(boolean bool) {
+        btn1.setClickable(bool);
+        btn2.setClickable(bool);
+        btn3.setClickable(bool);
+        btn4.setClickable(bool);
+        btn5.setClickable(bool);
+        btn6.setClickable(bool);
+        btn7.setClickable(bool);
+        btn8.setClickable(bool);
+        btn9.setClickable(bool);
+    }
+
+    private void currentTurnColor(int string, int color) {
+        currentTurn.setText(getString(string));
+        currentTurn.setTextColor(getResources().getColor(color));
     }
 
     private void normalColor(Button btn) {
